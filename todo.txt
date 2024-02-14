@@ -1,0 +1,7 @@
+Dashboard Information
+1. Jadwal Jaga Bazzaar
+
+Primary Todo:
+1. CRUD USER
+    -Read Done
+(DB model same as last year bazzaar)
