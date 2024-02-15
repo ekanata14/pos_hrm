@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('address')->nullable();
+            $table->string('address')->nullable(); 
+            $table->string("phone_number");
             $table->unsignedInteger('id_role');
             $table->foreign('id_role')->references('id_role')->on('roles')->constrained();
             $table->rememberToken();

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 // use App\Http\Requests\RegisterRequest;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -12,18 +13,19 @@ class RegisterController extends Controller
         return view('auth.register');
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        $attributes = request()->validate([
+        $attributes = $request->validate([
             'username' => 'required|max:255|min:2',
             'name' => 'required|max:255|min:2',
             'email' => 'required|email|max:255|unique:users,email',
-            'address' => 'required|max:255|min:2',
+            'address' => 'required|min:2',
+            'phone_number' => 'required|min:5',
             'password' => 'required|min:5|max:255',
-            'terms' => 'required'
+            'id_role' => 'required' 
         ]);
         $user = User::create($attributes);
-        // auth()->login($user);
+        auth()->login($user);
 
         return redirect('/dashboard');
     }

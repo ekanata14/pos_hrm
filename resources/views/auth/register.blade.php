@@ -19,9 +19,9 @@
             <div class="row mt-lg-n10 mt-md-n11 mt-n10 justify-content-center">
                 <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
                     <div class="card z-index-0"> 
-                        <h1 class="text-center mt-3">Form Pendaftaran</h1>
+                        <h3 class="text-center mt-3">Form Pendaftaran</h3>
                         <div class="card-body py-1">
-                            <form method="POST" action="{{ route('user.create') }}">
+                            <form method="POST" action="{{ route('register.perform') }}">
                                 @csrf
                                  <div class="flex flex-col mb-3">
                                     <h5>Username</h5>
@@ -39,6 +39,11 @@
                                     @error('email') <p class='text-danger text-xs pt-1'> {{ $message }} </p> @enderror
                                 </div>
                                 <div class="flex flex-col mb-3">
+                                    <h5>Nomor Telepon</h5>
+                                    <input type="text" name="phone_number" class="form-control" placeholder="Nomor Telepon" aria-label="Phone Number" value="{{ old('phone_number') }}" >
+                                    @error('phone_number') <p class='text-danger text-xs pt-1'> {{ $message }} </p> @enderror
+                                </div>
+                                <div class="flex flex-col mb-3">
                                     <h5>Alamat</h5>
                                     <textarea name="address" id="address" rows="5" placeholder="Jangan lupa alamat rumah atau kabupaten/kota Anda" class="form-control w-100"></textarea>
                                      @error('address') <p class='text-danger text-xs pt-1'> {{ $message }} </p> @enderror
@@ -50,7 +55,7 @@
                                 </div>
                                 <input type="hidden" name="id_role" id="id_role" value="2">
                                 <div class="text-center">
-                                    <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Gabung Sekarang</button>
+                                    <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2">Gabung Sekarang</button>
                                 </div>
                                 <p class="text-sm text-center mt-3 mb-0">Sudah Punya Akun?<a href="{{ route('login') }}"
                                         class="text-dark font-weight-bolder"> Login Dulu!</a></p>

@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -17,6 +18,7 @@ class UserController extends Controller
         
         return view('pages.user-management', [
             'users' => User::all(),
+            'usersWithRoles' => DB::table('users')->join('roles', 'users.id_role', '=', 'roles.id_role')->select('users.*', 'roles.name_role as name_role')->get()
         ]);
     }
 
@@ -33,54 +35,20 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-
-        // dd($request);
-
-        // $validatedData = $request->validate([
-        //     'username' => 'required|max:255|min:2',
-        //     'name' => 'required|max:255|min:2',
-        //     'email' => 'required|email|max:255|unique:users,email',
-        //     'address' => 'required|min:2',
-        //     'password' => 'required|min:5|max:255',
-        //     'id_role' => 'required' 
-        // ]);
-
-        $validator = Validator::make($request->all(), [
+        $validatedData = $request->validate([
             'username' => 'required|max:255|min:2',
             'name' => 'required|max:255|min:2',
             'email' => 'required|email|max:255|unique:users,email',
             'address' => 'required|min:2',
+            'phone_number' => 'required|min:5',
             'password' => 'required|min:5|max:255',
             'id_role' => 'required' 
         ]);
 
-
-        if($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
-
-        $data['username'] = $request->username;
-        $data['name'] = $request->name;
-        $data['email'] = $request->email;
-        $data['adddress'] = $request->address;
-        $data['password'] = $request->password;
-        $data['id_role'] = $request->id_role;
-
-        User::create($data);
-
-        return "success";
-
-        // dd($validatedData);
-
-        // User::create([
-        //     'username' => $request->username,
-        //     'name' => $request->name,
-        //     'email' => $request->email,
-        //     'address' => $request->address,
-        //     'id_role' => $request->role,
-        //     'password' => Hash::make($request->password)
-        // ]);
+        User::create($validatedData);
         
         // return response()->json(['message' => 'User Created Successfully', 'user' => $validatedData], 201);
-        // return redirect('/users');
+        return redirect('/users');
     }
 
     /**
@@ -97,37 +65,39 @@ class UserController extends Controller
      */
     public function edit(string $id)
     { 
-        $user = User::findOrFail($id);
-        return response()->json(['message' => "User Found", 'user' => $user]);  
+        return view('pages.edit-user', [
+            'user' => User::findOrFail($id)
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-         $attributes = request()->validate([
+    public function update(Request $request)
+    { 
+        $validatedData = $request->validate([
             'username' => 'required|max:255|min:2',
-            'email' => 'required|email|max:255|unique:users,email',
-            'password' => 'required|min:5|max:255',
-            'terms' => 'required'
+            'name' => 'required|max:255|min:2',
+            'email' => 'required|email|max:255',
+            'address' => 'required|min:2',
+            'phone_number' => 'required|min:5',
+            'id_role' => 'required' 
         ]);
 
-        $user = User::findOrFail($id);
-        $user->update($attributes);
+        $user = User::findOrFail($request->id_user);
+        $user->update($validatedData);
         
-        return response()->json(['message' => 'User Updated Successfully', 'user' => $user], 201); 
+        return redirect('/users');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        $user = User::findOrFail($id);
+        $user = User::findOrFail($request->id_user);
         $user->delete();
-
-        return response()->json(['message' => 'User Updated Successfully', 'user' => $user], 201); 
+        return redirect('/users');
     
     }
 }

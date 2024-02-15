@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             'id_role' => 1,
             'password' => bcrypt('admin'),
             'address' => "Denpasar",
+            'phone_number' => '081236573953'
         ]);
         
         DB::table('users')->insert([
@@ -39,6 +40,7 @@ class DatabaseSeeder extends Seeder
             'id_role' => 1,
             'password' => bcrypt('ekanata'),
             'address' => "Denpasar",
+            'phone_number' => '081236573953'
         ]);
     }
 }

@@ -2,6 +2,6 @@ Dashboard Information
 1. Jadwal Jaga Bazzaar
 
 Primary Todo:
-1. CRUD USER
-    -Read Done
+1. CRUD USER DONE
+2. CRUD SUPPLIER, CATEGORIES
 (DB model same as last year bazzaar)

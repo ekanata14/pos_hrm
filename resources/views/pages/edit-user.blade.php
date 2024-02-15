@@ -12,31 +12,24 @@
                     <h6>Users</h6>
                 </div>
                 <div class="card-body px-3 py-1">
-                    <form method="POST" action="/users">
+                    <form method="POST" action="{{ route('user.edit.perform') }}">
                                 @csrf
+                                <input type="hidden" value="{{ $user->id_user }}" name="id_user">
                                 <div class="flex flex-col mb-3">
-                                    <input type="text" name="username" class="form-control" placeholder="Username" aria-label="Name" value="{{ old('username') }}" >
+                                    <input type="text" name="username" class="form-control" placeholder="Username" aria-label="Name" value="{{ $user->username}}" >
                                     @error('username') <p class='text-danger text-xs pt-1'> {{ $message }} </p> @enderror
                                 </div>
                                 <div class="flex flex-col mb-3">
-                                    <input type="text" name="name" class="form-control" placeholder="Name" aria-label="Name" value="{{ old('name') }}" >
+                                    <input type="text" name="name" class="form-control" placeholder="Name" aria-label="Name" value="{{ $user->name }}" >
                                     @error('name') <p class='text-danger text-xs pt-1'> {{ $message }} </p> @enderror
                                 </div>
                                 <div class="flex flex-col mb-3">
-                                    <input type="email" name="email" class="form-control" placeholder="Email" aria-label="Email" value="{{ old('email') }}" >
+                                    <input type="email" name="email" class="form-control" placeholder="Email" aria-label="Email" value="{{ $user->email }}" >
                                     @error('email') <p class='text-danger text-xs pt-1'> {{ $message }} </p> @enderror
                                 </div>
                                 <div class="flex flex-col mb-3">
-                                    <input type="number" name="phone_number" class="form-control" placeholder="Phone Number" aria-label="Phone Number" value="{{ old('phone_number') }}" >
-                                    @error('phone_number') <p class='text-danger text-xs pt-1'> {{ $message }} </p> @enderror
-                                </div>
-                                <div class="flex flex-col mb-3">
-                                    <textarea name="address" id="address" rows="5" placeholder="Address" class="form-control w-100"></textarea>
+                                    <textarea name="address" id="address" rows="5" placeholder="Address" class="form-control w-100">{{ $user->address }}</textarea>
                                      @error('address') <p class='text-danger text-xs pt-1'> {{ $message }} </p> @enderror
-                                </div>
-                                <div class="flex flex-col mb-3">
-                                    <input type="password" name="password" class="form-control" placeholder="Password" aria-label="Password">
-                                    @error('password') <p class='text-danger text-xs pt-1'> {{ $message }} </p> @enderror
                                 </div>
                                 <div class="flex flex-col mb-3">
                                     <select name="id_role" id="id_role" class="form-select w-25">
@@ -46,7 +39,7 @@
                                     @error('role') <p class='text-danger text-xs pt-1'> {{ $message }} </p> @enderror
                                 </div>
                                 <div class="text-end">
-                                    <button type="submit" class="btn bg-primary text-white w-25 my-4 mb-2">Add User</button>
+                                    <button type="submit" class="btn bg-warning text-white w-25 my-4 mb-2">Edit User</button>
                                 </div>
                             </form>
                 </div>
